@@ -1,5 +1,8 @@
 package calendar;
 
+import calendar.exceptions.CalendarException;
+import calendar.statics.ErrorCode;
+
 public class CMeeting {
 
 	private CTime startTime;
@@ -7,11 +10,11 @@ public class CMeeting {
 	private String location;
 	private boolean enableBHCK;
 
-	public CMeeting(CTime startTime, CTime endTime, String location) throws Exception {
+	public CMeeting(CTime startTime, CTime endTime, String location) throws CalendarException {
 		this(startTime, endTime, location, false);
 	}
 
-	public CMeeting(CTime startTime, CTime endTime, String location, boolean enableBHCK) throws Exception {
+	public CMeeting(CTime startTime, CTime endTime, String location, boolean enableBHCK) throws CalendarException {
 		this.startTime = startTime;
 		this.endTime = endTime;
 		this.location = location;
@@ -28,7 +31,8 @@ public class CMeeting {
 		CTime localSTime = CTime.translateTime(startTime, timeZone);
 		CTime localETime = CTime.translateTime(endTime, timeZone);
 
-		if (localSTime.getHour() > 8 && localETime.getHour() < 5) {
+		if (localSTime.getHour() > 8 && localSTime.getHour() < 16 && localETime.getHour() > 8
+				&& localETime.getHour() < 16) {
 			return true;
 		} else {
 			return false;
@@ -40,13 +44,15 @@ public class CMeeting {
 		return 0;
 	}
 
-	private void validateMeeting() throws Exception {
+	private void validateMeeting() throws CalendarException {
 		if (!checkTimeSpan(startTime, endTime)) {
-			throw new Exception("Start time must before end time.");
+			throw new CalendarException(1001);
 		}
+		
+		boolean result = checkBusinessHour();
 
-		if (enableBHCK && checkBusinessHour()) {
-			throw new Exception("Start time and end time must within the business hour.");
+		if (enableBHCK && checkBusinessHour() == false) {
+			throw new CalendarException(1002);
 		}
 	}
 
