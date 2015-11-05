@@ -1,6 +1,7 @@
 package calendar.test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
@@ -101,7 +102,7 @@ public class CTimeTest {
 
 		assertEquals(0, CTime.compairTime(sTime, eTime));
 		assertEquals(0, CTime.compairTime(eTime, sTime));
-		
+
 		sTime = new CTime(20, -29, -8);
 		eTime = new CTime(1, 31, 11);
 

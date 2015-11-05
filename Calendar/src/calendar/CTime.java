@@ -141,6 +141,19 @@ public class CTime {
 		return resultMinute;
 	}
 
+	public static int calculateTimeZone(String location) {
+		// TODO:Calculate Time Zone from location.
+		switch (location) {
+		case "Windsor":
+			return -5;
+		case "London":
+			return 0;
+		case "Berlin":
+			return 2;
+		}
+		return 0;
+	}
+
 	public static int validateTimeZone(int timeZone) {
 		if (timeZone < -12)
 			return -12;

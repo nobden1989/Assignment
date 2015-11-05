@@ -1,7 +1,6 @@
 package calendar;
 
 import calendar.exceptions.CalendarException;
-import calendar.statics.ErrorCode;
 
 public class CMeeting {
 
@@ -9,6 +8,26 @@ public class CMeeting {
 	private CTime endTime;
 	private String location;
 	private boolean enableBHCK;
+
+	public CTime getStartTime() {
+		return startTime;
+	}
+
+	public CTime getEndTime() {
+		return endTime;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public boolean isEnableBHCK() {
+		return enableBHCK;
+	}
+
+	public void setEnableBHCK(boolean enableBHCK) {
+		this.enableBHCK = enableBHCK;
+	}
 
 	public CMeeting(CTime startTime, CTime endTime, String location) throws CalendarException {
 		this(startTime, endTime, location, false);
@@ -26,32 +45,25 @@ public class CMeeting {
 		return CTime.compairTime(startTime, endTime) < 0;
 	}
 
-	private boolean checkBusinessHour() {
-		int timeZone = calculateTimeZone(location);
+	private boolean checkIfBusinessHour() {
+		int timeZone = CTime.calculateTimeZone(location);
 		CTime localSTime = CTime.translateTime(startTime, timeZone);
 		CTime localETime = CTime.translateTime(endTime, timeZone);
 
 		if (localSTime.getHour() > 8 && localSTime.getHour() < 16 && localETime.getHour() > 8
 				&& localETime.getHour() < 16) {
-			return true;
-		} else {
 			return false;
+		} else {
+			return true;
 		}
-	}
-
-	private int calculateTimeZone(String location) {
-		// TODO:Calculate Time Zone from location.
-		return 0;
 	}
 
 	private void validateMeeting() throws CalendarException {
 		if (!checkTimeSpan(startTime, endTime)) {
 			throw new CalendarException(1001);
 		}
-		
-		boolean result = checkBusinessHour();
 
-		if (enableBHCK && checkBusinessHour() == false) {
+		if (enableBHCK && checkIfBusinessHour()) {
 			throw new CalendarException(1002);
 		}
 	}
