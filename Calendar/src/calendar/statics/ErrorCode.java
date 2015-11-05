@@ -2,8 +2,9 @@ package calendar.statics;
 
 public class ErrorCode {
 	private final static String ERR_0000 = "Unkown Error.";
-	private final static String ERR_1001 = "Start time must before end time.";
-	private final static String ERR_1002 = "Start time and end time must within the business hour.";
+	private final static String ERR_1001 = "Start time or end time is null object.";
+	private final static String ERR_1002 = "Start time must before end time.";
+	private final static String ERR_1003 = "Start time and end time must within the business hour.";
 	private final static String ERR_2001 = "Meeting time overlaped!";
 
 	public static String getErrorMessage(int errorCode) {
@@ -14,6 +15,9 @@ public class ErrorCode {
 			break;
 		case 1002:
 			eMsg = ERR_1002;
+			break;
+		case 1003:
+			eMsg = ERR_1003;
 			break;
 		case 2001:
 			eMsg = ERR_2001;
