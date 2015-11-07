@@ -22,7 +22,7 @@ public class CScheduleTest {
 
 			CTime startTime2 = new CTime(8, 0, -2);
 			CTime endTime2 = new CTime(9, 30, -2);
-			
+
 			CTime startTime3 = new CTime(8, 0, 2);
 			CTime endTime3 = new CTime(9, 30, 2);
 
@@ -62,14 +62,13 @@ public class CScheduleTest {
 			fail("Expect error!");
 			schedule.addMeeting(meeting3);
 
-			
 			System.out.println(schedule);
 
 		} catch (CalendarException e) {
-			assertEquals(2001, e.getErrorCode());
-			assertEquals(ErrorCode.getErrorMessage(2001), e.getErrorMessage());
+			assertEquals(2010, e.getErrorCode());
+			assertEquals(ErrorCode.getErrorMessage(2010), e.getErrorMessage());
 		}
-		
+
 		try {
 
 			CSchedule schedule = new CSchedule();
@@ -91,15 +90,13 @@ public class CScheduleTest {
 			schedule.addMeeting(meeting3);
 			schedule.addMeeting(meeting2);
 			fail("Expect error!");
-			
-			
+
 			System.out.println(schedule);
 
 		} catch (CalendarException e) {
 			assertEquals(2001, e.getErrorCode());
 			assertEquals(ErrorCode.getErrorMessage(2001), e.getErrorMessage());
 		}
-		
 
 	}
 
