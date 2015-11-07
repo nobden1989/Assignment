@@ -28,18 +28,37 @@ public class CSchedule {
 		meetingList = new ArrayList<CMeeting>();
 	}
 
-	public void removeMeeting(CMeeting newMeeting) throws CalendarException {
+	public CMeeting searchMeeting(int meetingID) throws CalendarException {
 
 		for (CMeeting meeting : meetingList) {
-			if (checkIfOverlap(meeting, newMeeting)) {
-				throw new CalendarException(2001);
+			if (meeting.getMeetingID() == meetingID) {
+				return meeting;
 			}
 		}
 
-		meetingList.add(newMeeting);
-
+		return null;
 	}
-	
+
+	public List<CMeeting> searchMeetings(String meetingName) throws CalendarException {
+		List<CMeeting> resultList = new ArrayList<CMeeting>();
+		for (CMeeting meeting : meetingList) {
+			if (meeting.getMeetingName() != null && meeting.getMeetingName().equals(meetingName)) {
+				resultList.add(meeting);
+			}
+		}
+
+		return resultList;
+	}
+
+	public boolean removeMeeting(int meetingID) throws CalendarException {
+
+		return meetingList.remove(this.searchMeeting(meetingID));
+	}
+
+	public boolean removeMeetings(String meetingName) throws CalendarException {
+		return meetingList.remove(this.searchMeetings(meetingName));
+	}
+
 	public void addMeeting(CMeeting newMeeting) throws CalendarException {
 
 		for (CMeeting meeting : meetingList) {
