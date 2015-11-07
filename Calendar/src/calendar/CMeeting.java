@@ -140,8 +140,7 @@ public class CMeeting {
 	 *            check business hour¡£ ¡¶br /¡·false: no business hour check.
 	 * @throws CalendarException
 	 */
-	public CMeeting(CTime startTime, CTime endTime, String location, boolean enableBHCK)
-			throws CalendarException {
+	public CMeeting(CTime startTime, CTime endTime, String location, boolean enableBHCK) throws CalendarException {
 		id++;
 		this.startTime = startTime;
 		this.endTime = endTime;
@@ -160,7 +159,25 @@ public class CMeeting {
 	 *         false: start time is after end time.
 	 */
 	private boolean checkTimeSpan(CTime startTime, CTime endTime) {
-		return CTime.compairTime(startTime, endTime) < 0;
+		return (CTime.compairTime(startTime, endTime) < 0);
+	}
+
+	/**
+	 * Check if the meeting is no longer than an hour.
+	 * 
+	 * @param startTime
+	 * @param endTime
+	 * @return true: meeting is shorter than an hour. <br />
+	 *         false: meeting is longer than an hour.
+	 */
+	private boolean checkMeetingTime(CTime startTime, CTime endTime) {
+		CTime stdStarTime = CTime.getStandarTime(startTime);
+		CTime stdEndTime = CTime.getStandarTime(endTime);
+
+		int stdStimeHour = stdStarTime.getHour() + stdStarTime.getDayPlus() * 24;
+		int stdEtimeHour = stdEndTime.getHour() + stdEndTime.getDayPlus() * 24;
+		return (stdEtimeHour - stdStimeHour < 1
+				|| (stdEtimeHour - stdStimeHour == 1 && stdEndTime.getMinute() <= stdStarTime.getMinute()));
 	}
 
 	/**
@@ -190,15 +207,19 @@ public class CMeeting {
 	 */
 	private void validateMeeting() throws CalendarException {
 		if (startTime == null || endTime == null) {
-			throw new CalendarException(1001);
+			throw new CalendarException(1010);
 		}
 
 		if (!checkTimeSpan(startTime, endTime)) {
-			throw new CalendarException(1002);
+			throw new CalendarException(1020);
+		}
+
+		if (!checkMeetingTime(startTime, endTime)) {
+			throw new CalendarException(1030);
 		}
 
 		if (enableBHCK && checkIfBusinessHour()) {
-			throw new CalendarException(1003);
+			throw new CalendarException(1040);
 		}
 	}
 

@@ -15,8 +15,8 @@ public class CTime {
 	public final static int STANDER_TIME = 0;
 	/**
 	 * The day changes due to time zone changes.<br />
-	 * Positive: plus day(Go across the Dayline) <br />
-	 * Negative: minus day(Go backwards the Dayline)
+	 * Positive: plus day(Go across the dayline) <br />
+	 * Negative: minus day(Go backwards the dayline)
 	 */
 	private int dayPlus;
 	/**
