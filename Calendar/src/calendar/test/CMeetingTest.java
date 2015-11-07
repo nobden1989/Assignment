@@ -10,7 +10,108 @@ import calendar.CTime;
 import calendar.exceptions.CalendarException;
 import calendar.statics.ErrorCode;
 
+/**
+ * @author Luke, Liu
+ *
+ */
 public class CMeetingTest {
+
+	@Test
+	public void testCheckMeetingTime() {
+
+		// case 1
+		CTime startTime = null;
+		CTime endTime = null;
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 2
+		startTime = null;
+		endTime = new CTime(9, 30, 5);
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 3
+		startTime = new CTime(9, 30, 5);
+		endTime = null;
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 4
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(true, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 5
+		startTime = new CTime(9, 10, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(true, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 6
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(11, 30, 5);
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 7
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(11, 20, 5);
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 8
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(11, 40, 5);
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 9
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(10, 30, 5);
+		assertEquals(true, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 10
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(10, 20, 5);
+		assertEquals(true, (CMeeting.checkMeetingTime(startTime, endTime)));
+		// case 11
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(10, 40, 5);
+		assertEquals(false, (CMeeting.checkMeetingTime(startTime, endTime)));
+	}
+
+	@Test
+	public void testCheckTimeSpan() {
+
+		// case 13
+		CTime startTime = null;
+		CTime endTime = null;
+		assertEquals(false, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 14
+		startTime = null;
+		endTime = new CTime(9, 30, 5);
+		assertEquals(false, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 15
+		startTime = new CTime(9, 30, 5);
+		endTime = null;
+		assertEquals(false, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 16
+		startTime = new CTime(9, 30, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(true, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 17
+		startTime = new CTime(10, 30, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(false, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 18
+		startTime = new CTime(10, 40, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(false, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 19
+		startTime = new CTime(10, 20, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(false, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 20
+		startTime = new CTime(8, 30, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(true, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 21
+		startTime = new CTime(8, 40, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(true, (CMeeting.checkTimeSpan(startTime, endTime)));
+		// case 22
+		startTime = new CTime(8, 20, 5);
+		endTime = new CTime(9, 30, 5);
+		assertEquals(true, (CMeeting.checkTimeSpan(startTime, endTime)));
+
+	}
+
+	// EXTENTION TEST
 
 	@Test
 	public void testCMeeting() {

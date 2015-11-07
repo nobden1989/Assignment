@@ -58,7 +58,6 @@ public class CSchedule {
 				resultList.add(meeting);
 			}
 		}
-
 		return resultList;
 	}
 
@@ -69,7 +68,6 @@ public class CSchedule {
 	 * @return whether the meeting has been removed.
 	 */
 	public boolean removeMeeting(int meetingID) {
-
 		return meetingList.remove(this.searchMeeting(meetingID));
 	}
 
@@ -90,16 +88,18 @@ public class CSchedule {
 	 * @throws CalendarException
 	 *             the new meeting is overlapped.
 	 */
-	public void addMeeting(CMeeting newMeeting) throws CalendarException {
+	public boolean addMeeting(CMeeting newMeeting) throws CalendarException {
+
+		if (newMeeting == null) {
+			return false;
+		}
 
 		for (CMeeting meeting : meetingList) {
 			if (checkIfOverlap(meeting, newMeeting)) {
 				throw new CalendarException(2010);
 			}
 		}
-
-		meetingList.add(newMeeting);
-
+		return meetingList.add(newMeeting);
 	}
 
 	/**
@@ -108,9 +108,13 @@ public class CSchedule {
 	 * @param meeting
 	 * @param newMeeting
 	 * @return true: two meeting is overlapped<br />
-	 * false: two meeting is not overlapped.
+	 *         false: two meeting is not overlapped.
 	 */
 	private boolean checkIfOverlap(CMeeting meeting, CMeeting newMeeting) {
+
+		if (newMeeting == null || meeting == null) {
+			return false;
+		}
 
 		if (CTime.compairTime(meeting.getStartTime(), newMeeting.getEndTime()) >= 0
 				|| CTime.compairTime(meeting.getEndTime(), newMeeting.getStartTime()) >= 0) {
@@ -120,7 +124,6 @@ public class CSchedule {
 		}
 
 	}
-
 
 	/**
 	 * Override the toString method of Object.<br />

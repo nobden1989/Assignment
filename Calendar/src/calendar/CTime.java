@@ -32,7 +32,7 @@ public class CTime {
 	 */
 	private int timeZone;
 	/**
-	 * Enable day light saving time.
+	 * Enable day light saving time.(UNTEST! Keep false!)
 	 */
 	private boolean enableDST = false;
 
@@ -138,11 +138,18 @@ public class CTime {
 	 * @param toTime
 	 * @return -1: fromTime is before the toTime.<br />
 	 *         0: fromTime is the same to toTime.<br />
-	 *         1: fromTIme is after the toTime.
+	 *         1: fromTIme is after the toTime.<br / > 2: fromTime or toTime is
+	 *         null.
 	 */
 	public static int compairTime(CTime fromTime, CTime toTime) {
+
+		if (fromTime == null || toTime == null) {
+			return 2;
+		}
+
 		CTime stdFTime = getStandarTime(fromTime);
 		CTime stdTTime = getStandarTime(toTime);
+
 		if (stdFTime.dayPlus > stdTTime.dayPlus) {
 			return 1;
 		} else if (stdFTime.dayPlus < stdTTime.dayPlus) {
@@ -178,8 +185,13 @@ public class CTime {
 		// TODO:DST support needed.
 		int hourSpan;
 
+		if (orgTime == null) {
+			return null;
+		}
+
 		if (orgTime.enableDST) {
-			hourSpan = orgTime.getHour() + orgTime.getTimeZone() - destTimezone;
+			// TODO: DST is currently implemented as +1 to all.
+			hourSpan = orgTime.getHour() + 1 + orgTime.getTimeZone() - destTimezone;
 		} else {
 			hourSpan = orgTime.getHour() + orgTime.getTimeZone() - destTimezone;
 		}

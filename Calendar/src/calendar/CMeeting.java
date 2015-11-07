@@ -7,7 +7,7 @@ import calendar.exceptions.CalendarException;
  * Manage start time, end time and location of a certain meeting.<br />
  * Include Meeting time and all the validation methods.
  * 
- * @author Nedias
+ * @author Yan Zhi Hao
  * 
  */
 public class CMeeting {
@@ -65,6 +65,16 @@ public class CMeeting {
 	 */
 	public int getMeetingID() {
 		return meetingID;
+	}
+
+	/**
+	 * Setter for meeting ID.
+	 * 
+	 * @param meeting
+	 *            ID
+	 */
+	public void setMeetingID(int meetingID) {
+		this.meetingID = meetingID;
 	}
 
 	/**
@@ -158,8 +168,8 @@ public class CMeeting {
 	 * @return true:start time is before end time. <br />
 	 *         false: start time is after end time.
 	 */
-	private boolean checkTimeSpan(CTime startTime, CTime endTime) {
-		return (CTime.compairTime(startTime, endTime) < 0);
+	public static boolean checkTimeSpan(CTime startTime, CTime endTime) {
+		return (CTime.compairTime(startTime, endTime) <= 0);
 	}
 
 	/**
@@ -170,7 +180,12 @@ public class CMeeting {
 	 * @return true: meeting is shorter than an hour. <br />
 	 *         false: meeting is longer than an hour.
 	 */
-	private boolean checkMeetingTime(CTime startTime, CTime endTime) {
+	public static boolean checkMeetingTime(CTime startTime, CTime endTime) {
+
+		if (startTime == null || endTime == null) {
+			return false;
+		}
+
 		CTime stdStarTime = CTime.getStandarTime(startTime);
 		CTime stdEndTime = CTime.getStandarTime(endTime);
 
@@ -186,7 +201,7 @@ public class CMeeting {
 	 * @return true:start time and end time is within business hour.<br />
 	 *         false: start time and end time is out of business hour.
 	 */
-	private boolean checkIfBusinessHour() {
+	public boolean checkIfBusinessHour() {
 		int timeZone = CTime.calculateTimeZone(location);
 		CTime localSTime = CTime.translateTime(startTime, timeZone);
 		CTime localETime = CTime.translateTime(endTime, timeZone);
@@ -205,7 +220,7 @@ public class CMeeting {
 	 * @throws CalendarException
 	 *             include error code and error message.
 	 */
-	private void validateMeeting() throws CalendarException {
+	public void validateMeeting() throws CalendarException {
 		if (startTime == null || endTime == null) {
 			throw new CalendarException(1010);
 		}

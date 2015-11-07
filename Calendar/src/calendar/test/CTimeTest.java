@@ -7,8 +7,94 @@ import org.junit.Test;
 
 import calendar.CTime;
 
+/**
+ * @author Yan Zhi Hao
+ *
+ */
 public class CTimeTest {
 
+	@Test
+	public void testValidateHour() {
+		// case 1
+		assertEquals(12, CTime.validateHour(12));
+		// case 2
+		assertEquals(23, CTime.validateHour(-1));
+		// case 3
+		assertEquals(0, CTime.validateHour(24));
+		// case 4
+		assertEquals(0, CTime.validateHour(0));
+		// case 5
+		assertEquals(23, CTime.validateHour(23));
+		// case 6
+		assertNotNull(CTime.validateHour(Integer.MIN_VALUE));
+		// case 7
+		assertNotNull(CTime.validateHour(Integer.MAX_VALUE));
+	}
+
+	@Test
+	public void testValidateMinute() {
+		// case 8
+		assertEquals(25, CTime.validateMinute(25));
+		// case 9
+		assertEquals(59, CTime.validateMinute(-1));
+		// case 10
+		assertEquals(0, CTime.validateMinute(60));
+		// case 11
+		assertEquals(0, CTime.validateMinute(0));
+		// case 12
+		assertEquals(59, CTime.validateMinute(59));
+		// case 13
+		assertNotNull(CTime.validateMinute(Integer.MIN_VALUE));
+		// case 14
+		assertNotNull(CTime.validateMinute(Integer.MAX_VALUE));
+	}
+
+	@Test
+	public void testValidateTimeZone() {
+		// case 15
+		assertEquals(0, CTime.validateTimeZone(0));
+		// case 16
+		assertEquals(-12, CTime.validateTimeZone(-13));
+		// case 17
+		assertEquals(14, CTime.validateTimeZone(15));
+		// case 18
+		assertEquals(-12, CTime.validateTimeZone(-12));
+		// case 19
+		assertEquals(14, CTime.validateTimeZone(14));
+		// case 20
+		assertNotNull(CTime.validateMinute(Integer.MIN_VALUE));
+		// case 21
+		assertNotNull(CTime.validateMinute(Integer.MAX_VALUE));
+	}
+
+	@Test
+	public void testTranslateTime() {
+		// case 22
+		CTime time = new CTime(20, 0, 11);
+		CTime newTime;
+		newTime = CTime.translateTime(time, 0);
+		assertEquals(7, newTime.getHour());
+		assertEquals(0, newTime.getMinute());
+		assertEquals(0, newTime.getTimeZone());
+		assertEquals(1, newTime.getDayPlus());
+		// case 23
+		time = new CTime(5, 0, -11);
+		newTime = CTime.translateTime(time, 0);
+		assertEquals(18, newTime.getHour());
+		assertEquals(0, newTime.getMinute());
+		assertEquals(0, newTime.getTimeZone());
+		assertEquals(-1, newTime.getDayPlus());
+		// case 24
+		time = new CTime(12, 0, 5);
+		newTime = CTime.translateTime(time, 0);
+		assertEquals(17, newTime.getHour());
+		assertEquals(0, newTime.getMinute());
+		assertEquals(0, newTime.getTimeZone());
+		assertEquals(0, newTime.getDayPlus());
+
+	}
+
+	// EXTENTION TEST
 	@Test
 	public void testGetStandarTime() {
 
@@ -123,44 +209,6 @@ public class CTimeTest {
 
 		assertNotNull(CTime.calculateHour(Integer.MIN_VALUE, Integer.MIN_VALUE));
 		assertNotNull(CTime.calculateHour(Integer.MAX_VALUE, Integer.MAX_VALUE));
-	}
-
-	@Test
-	public void testValidateHour() {
-		assertEquals(11, CTime.validateHour(-13));
-		assertEquals(23, CTime.validateHour(-1));
-		assertEquals(0, CTime.validateHour(0));
-		assertEquals(12, CTime.validateHour(12));
-		assertEquals(23, CTime.validateHour(23));
-		assertEquals(0, CTime.validateHour(24));
-		assertEquals(13, CTime.validateHour(37));
-		assertNotNull(CTime.validateHour(Integer.MIN_VALUE));
-		assertNotNull(CTime.validateHour(Integer.MAX_VALUE));
-	}
-
-	@Test
-	public void testValidateMinute() {
-		assertEquals(29, CTime.validateMinute(-31));
-		assertEquals(59, CTime.validateMinute(-1));
-		assertEquals(0, CTime.validateMinute(0));
-		assertEquals(30, CTime.validateMinute(30));
-		assertEquals(59, CTime.validateMinute(59));
-		assertEquals(0, CTime.validateMinute(60));
-		assertEquals(31, CTime.validateMinute(91));
-		assertNotNull(CTime.validateMinute(Integer.MIN_VALUE));
-		assertNotNull(CTime.validateMinute(Integer.MAX_VALUE));
-	}
-
-	@Test
-	public void testValidateTimeZone() {
-		assertEquals(-12, CTime.validateTimeZone(-13));
-		assertEquals(-12, CTime.validateTimeZone(-12));
-		assertEquals(0, CTime.validateTimeZone(0));
-		assertEquals(6, CTime.validateTimeZone(6));
-		assertEquals(14, CTime.validateTimeZone(14));
-		assertEquals(14, CTime.validateTimeZone(15));
-		assertNotNull(CTime.validateMinute(Integer.MIN_VALUE));
-		assertNotNull(CTime.validateMinute(Integer.MAX_VALUE));
 	}
 
 }
