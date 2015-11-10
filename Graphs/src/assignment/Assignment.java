@@ -19,7 +19,7 @@ import graphs.In;
 import graphs.KruskalMST;
 import graphs.StdOut;
 import graphs.SymbolGraph;
-import util.FileHepler;
+import util.FileHelper;
 
 public class Assignment {
 
@@ -58,7 +58,7 @@ public class Assignment {
 		}
 
 		try {
-			FileHepler.writeFile(sb,
+			FileHelper.writeFile(sb,
 					System.getProperty("user.dir") + "\\data\\largeDGPreorder.txt");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -81,7 +81,7 @@ public class Assignment {
 			}
 		}
 		try {
-			FileHepler.writeFile(sb,
+			FileHelper.writeFile(sb,
 					System.getProperty("user.dir") + "\\data\\largeDGPostorder.txt");
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,7 +115,7 @@ public class Assignment {
 		}
 
 		try {
-			FileHepler.writeFile(sb,
+			FileHelper.writeFile(sb,
 					System.getProperty("user.dir") + "\\data\\shortestPathEWG.txt");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -137,7 +137,7 @@ public class Assignment {
 		}
 		sb.append(String.format("%.5f", mst.weight()));
 		try {
-			FileHepler.writeFile(sb, System.getProperty("user.dir") + "\\data\\MSTEWG.txt");
+			FileHelper.writeFile(sb, System.getProperty("user.dir") + "\\data\\MSTEWG.txt");
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -176,7 +176,7 @@ public class Assignment {
 		sb.append(findMatch_2(sg, new String[] { "Roberts, Julia (I)", "Grant, Hugh (I)" }));
 
 		try {
-			FileHepler.writeFile(sb, System.getProperty("user.dir") + "\\data\\moviesResult.txt");
+			FileHelper.writeFile(sb, System.getProperty("user.dir") + "\\data\\moviesResult.txt");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

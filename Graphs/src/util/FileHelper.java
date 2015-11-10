@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileHepler {
+public class FileHelper {
 
 	public static List<String> readDirectory(String dir) {
 
