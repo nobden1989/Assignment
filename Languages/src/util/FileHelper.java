@@ -42,10 +42,10 @@ public class FileHelper {
 		os.close();
 	}
 
-	public static void appendFile(StringBuffer buffer, String outFilename) throws IOException {
+	public static void appendFile(String buffer, String outFilename) throws IOException {
 		OutputStream os = new FileOutputStream(outFilename, true);
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os));
-		writer.write(buffer.toString());
+		writer.write(buffer);
 		writer.flush();
 		os.close();
 	}
