@@ -40,7 +40,6 @@ if [[ ${TARGET} == ${DESTINATION} ]]; then
     DESTINATION=$TARGET$DEST
 fi
 
-
 echo FILE SIZE  = "${SIZE}"
 echo COPY TARGET     = "${TARGET}"
 echo COPY DESTINATION    = "${DESTINATION}"
@@ -49,8 +48,19 @@ echo FILE TYPE = "${FILETYPE[*]}"
 for file in ${TARGET}/*; do  
     L=`du -b $file|awk '{print $1}'`
     for i in ${FILETYPE[@]}; do
-        if [[ ${file##*.} == $i && $L < $SIZE ]]; then
+        if [[ ${file##*.} == $i && $L > $SIZE ]]; then
 	    test -d $DESTINATION || mkdir -p $DESTINATION && cp $file $DESTINATION
 	fi
     done
-done 
+done
+
+rm myArchive.tar
+
+tar cvf myArchive.tar *
+
+find . -type f -not -name 'myArchive.tar' | xargs rm
+
+
+
+
+
